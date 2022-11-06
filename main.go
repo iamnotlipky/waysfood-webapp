@@ -7,6 +7,7 @@ import (
 	"foodways/routes"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -33,6 +34,7 @@ func main() {
 	var allowedMethods = handlers.AllowedMethods([]string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"})
 	var allowedOrigins = handlers.AllowedOrigins([]string{"*"})
 
+	port := os.Getenv("PORT")
 	fmt.Println("server running on port 8000")
-	http.ListenAndServe(":8000", handlers.CORS(allowedHeaders, allowedMethods, allowedOrigins)(r))
+	http.ListenAndServe(":" + port, handlers.CORS(allowedHeaders, allowedMethods, allowedOrigins)(r))
 }
